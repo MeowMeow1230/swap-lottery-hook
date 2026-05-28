@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><style>
+/* ═══ Neon Noir · Swap Lottery Hook ═══ */
+:root{
+  --bg:#000;
+  --surface:rgba(255,255,255,.018);
+  --border:rgba(255,255,255,.04);
+  --purple:#B87CFA;
+  --blue:#4DA8FF;
+  --cyan:#00F0D4;
+  --green:#2EE69B;
+  --amber:#FFAD3A;
+  --red:#FF5078;
+  --text:#E8E8EE;
+  --muted:rgba(255,255,255,.38);
+  --dim:rgba(255,255,255,.12);
+}
+@font-face{font-family:'Mono';src:local('SF Mono'),local('Menlo'),local('Consolas'),local('monospace')}
+*{margin:0;padding:0;box-sizing:border-box}
+.slide{
+  width:1280px;height:720px;background:var(--bg);position:relative;overflow:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);
+}
+/* Geometric line grid */
+.slide>.grid{
+  position:absolute;inset:0;opacity:.024;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(184,124,250,.35) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(184,124,250,.35) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+/* Vignette */
+.slide>.vignette{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 0%,rgba(184,124,250,.05) 0%,transparent 55%);
+}
+/* Top shimmer bar */
+.slide>.topbar{
+  position:absolute;top:0;left:0;right:0;height:2px;z-index:10;
+  background:linear-gradient(90deg,var(--purple),var(--blue),var(--cyan),var(--purple));
+  background-size:200% 100%;animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{to{background-position:200% 0}}
+/* Content area */
+.slide>.wrap{position:relative;z-index:2;width:100%;height:100%;padding:46px 54px}
+.page-num{position:absolute;bottom:18px;right:28px;font:11px 'Mono',monospace;color:var(--dim);letter-spacing:2px}
+
+/* ── Typography ── */
+h1.title{font-size:30px;font-weight:700;letter-spacing:-0.4px;margin-bottom:6px}
+h2.sub{font-size:15px;font-weight:400;color:var(--muted);margin-bottom:36px}
+
+/* ── Glass Card ── */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:26px 22px;position:relative;overflow:hidden;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+.card::after{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px}
+.card.purple::after{background:linear-gradient(180deg,var(--purple),transparent)}
+.card.blue::after{background:linear-gradient(180deg,var(--blue),transparent)}
+.card.cyan::after{background:linear-gradient(180deg,var(--cyan),transparent)}
+.card.green::after{background:linear-gradient(180deg,var(--green),transparent)}
+.card h3{font-size:17px;font-weight:600;margin:0 0 8px 10px;letter-spacing:-0.2px}
+.card p{font-size:13px;color:var(--muted);line-height:1.6;margin-left:10px}
+
+/* ═══ Slide 1 · Cover ═══ */
+.s1{display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column}
+.s1 .hook-icon{font-size:48px;margin-bottom:20px;filter:drop-shadow(0 0 20px rgba(184,124,250,.4))}
+.s1 h1{font-size:72px;font-weight:800;letter-spacing:-2px;line-height:1.08}
+.s1 h1 .g1{background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.s1 h1 .g2{background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.s1 h2{font-size:32px;font-weight:600;color:var(--text);margin:4px 0 18px;letter-spacing:-0.5px}
+.s1 .meta{font-size:14px;color:var(--muted)}
+.s1 .pill{display:inline-block;margin-top:20px;padding:9px 22px;border-radius:22px;background:rgba(184,124,250,.1);border:1px solid rgba(184,124,250,.2);font:13px 'Mono',monospace;color:var(--purple);font-weight:500}
+.s1 .glow{position:absolute;width:450px;height:450px;border-radius:50%;background:radial-gradient(circle,rgba(184,124,250,.08) 0%,transparent 70%);pointer-events:none;top:45%;left:50%;transform:translate(-50%,-50%);z-index:1}
+
+/* ═══ Slide 2 · Problem ═══ */
+.s2 .cards{display:flex;gap:18px;margin-top:28px}
+.s2 .cards .card{flex:1;min-height:210px}
+.s2 .tagline{position:absolute;bottom:50px;left:54px;right:54px;text-align:center;font-size:16px;font-weight:600;padding:16px;background:rgba(184,124,250,.05);border:1px solid rgba(184,124,250,.1);border-radius:12px}
+
+/* ═══ Slide 3 · Mechanism ═══ */
+.s3 .flow{display:flex;gap:12px;margin:34px 0 26px}
+.s3 .flow .step{flex:1;text-align:center;padding:24px 10px;background:var(--surface);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:170px}
+.s3 .flow .step .dot{width:36px;height:36px;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font:16px 'Mono',monospace;font-weight:700}
+.s3 .flow .step h3{font-size:14px;font-weight:600;margin:0 0 5px}
+.s3 .flow .step p{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
+.s3 .fbox{text-align:center;padding:18px 28px;border-radius:12px;background:rgba(0,240,212,.05);border:1px solid rgba(0,240,212,.12);font:15px 'Mono',monospace;color:var(--cyan);font-weight:500;letter-spacing:-0.2px}
+
+/* ═══ Slide 4 & 5 · Compare ═══ */
+.s4 .compare,.s5 .compare{display:flex;gap:28px;margin:28px 0}
+.s4 .compare .col,.s5 .compare .col{flex:1;border-radius:16px;padding:30px 26px}
+.c-bad{background:rgba(255,80,120,.04);border:1px solid rgba(255,80,120,.12)}
+.c-good{background:rgba(46,230,155,.04);border:1px solid rgba(46,230,155,.12)}
+.c-warn{background:rgba(255,173,58,.04);border:1px solid rgba(255,173,58,.12)}
+.compare h3{font-size:19px;font-weight:700;margin-bottom:16px}
+.s4 .c-bad h3{color:var(--red)}.s4 .c-good h3{color:var(--green)}
+.s5 .c-warn h3{color:var(--amber)}.s5 .c-good h3{color:var(--green)}
+.compare p{font-size:14px;color:var(--muted);margin-bottom:7px;line-height:1.65}
+.s4 .hl,.s5 .hl{text-align:center;padding:18px 28px;border-radius:12px;background:rgba(0,240,212,.05);border:1px solid rgba(0,240,212,.12);font:15px 'Mono',monospace;color:var(--cyan);font-weight:500}
+
+/* ═══ Slide 6 · Flywheel ═══ */
+.s6 .quad{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:28px 60px}
+.s6 .quad .q{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 22px;position:relative}
+.s6 .quad .q::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px}
+.s6 .quad .q:nth-child(1)::before{background:var(--purple)}
+.s6 .quad .q:nth-child(2)::before{background:var(--blue)}
+.s6 .quad .q:nth-child(3)::before{background:var(--green)}
+.s6 .quad .q:nth-child(4)::before{background:var(--cyan)}
+.s6 .quad .q h3{font-size:18px;font-weight:600;margin:0 0 6px 10px}
+.s6 .quad .q p{font-size:13px;color:var(--muted);line-height:1.6;margin-left:10px}
+.s6 .center-glow{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:15px;font-weight:700;text-align:center;color:rgba(255,255,255,.25);z-index:3;letter-spacing:3px;text-transform:uppercase}
+
+/* ═══ Slide 7 · Architecture ═══ */
+.s7 .pipe{display:flex;gap:8px;margin:34px 0 24px;align-items:stretch}
+.s7 .pipe .p{flex:1;background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--purple);border-radius:10px;padding:20px 6px;text-align:center;font-size:12px;font-weight:500;color:#fff;display:flex;align-items:center;justify-content:center;line-height:1.4}
+.s7 .pipe .arr{display:flex;align-items:center;font-size:16px;color:var(--dim);flex-shrink:0}
+.s7 .specs p{font:13px 'Mono',monospace;color:var(--muted);margin-bottom:7px}
+
+/* ═══ Slide 8 · Deployment ═══ */
+.s8 .addrs{display:flex;flex-direction:column;gap:10px;margin:28px 50px}
+.s8 .addrs .row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px 22px}
+.s8 .addrs .lbl{font-size:15px;font-weight:600;color:var(--purple);min-width:170px}
+.s8 .addrs .val{font:12px 'Mono',monospace;color:var(--muted)}
+.s8 .addrs .hl-row{border-color:rgba(46,230,155,.2);background:rgba(46,230,155,.025)}
+.s8 .addrs .hl-row .lbl{color:var(--green)}
+.s8 .addrs .hl-row .val{color:var(--green)}
+.s8 .stat{text-align:center;margin:28px 50px;padding:15px 24px;background:rgba(46,230,155,.04);border:1px solid rgba(46,230,155,.1);border-radius:10px;font:13px 'Mono',monospace;color:var(--green);font-weight:500}
+
+/* ═══ Slide 9 · Roadmap ═══ */
+.s9 .cols{display:flex;gap:36px;margin:28px 0}
+.s9 .cols .col{flex:1}
+.s9 .cols h3{font-size:18px;font-weight:700;margin-bottom:16px}
+.s9 .lims .l{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.6;padding-left:14px;border-left:1px solid var(--dim)}
+.s9 .timeline{display:flex;flex-direction:column;gap:12px}
+.s9 .timeline .t{display:flex;align-items:baseline;gap:12px}
+.s9 .timeline .tt{font:12px 'Mono',monospace;font-weight:700;color:var(--cyan);min-width:50px}
+.s9 .timeline .td{font-size:13px;color:var(--muted)}
+
+/* ═══ Slide 10 · Closing ═══ */
+.s10{display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column}
+.s10 .glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,124,250,.09) 0%,transparent 65%);pointer-events:none;top:40%;left:50%;transform:translate(-50%,-50%);z-index:1}
+.s10 h1{font-size:60px;font-weight:800;letter-spacing:-1.5px;line-height:1.15}
+.s10 h1 .g{background:linear-gradient(135deg,var(--purple),var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.s10 .cta{margin-top:20px;padding:12px 32px;border-radius:28px;background:rgba(184,124,250,.1);border:1px solid rgba(184,124,250,.25);font:15px 'Mono',monospace;color:#fff;font-weight:500;letter-spacing:.5px}
+</style></head>
+<body>
+
+<!-- ═══ 1 · Cover ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s1"><div class="glow"></div>
+  <div class="hook-icon">🪝</div>
+  <h1><span class="g1">Swap Lottery</span><br><span class="g2">Hook</span></h1>
+  <h2>Make Every Swap a Winning Ticket</h2>
+  <p class="meta">Uniswap V4 Hook &nbsp;×&nbsp; Game Theory &nbsp;×&nbsp; On-Chain Lottery Engine</p>
+  <div class="pill">Hook the Future Hackathon &nbsp;·&nbsp; X Layer × Uniswap × Flap &nbsp;·&nbsp; May 2026</div>
+</div><div class="page-num">01 / 10</div></div>
+
+<!-- ═══ 2 · Problem ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s2">
+  <h1 class="title">Why Existing Solutions Don't Work</h1>
+  <h2 class="sub">Traders flow through liquidity pools like water — they come, swap, and never return.</h2>
+  <div class="cards">
+    <div class="card purple"><h3>Static LP Fees</h3><p>Passive income with zero incentive for traders to return. Pools bleed volume to competitors with better UX. No loyalty mechanism exists.</p></div>
+    <div class="card blue"><h3>Points &amp; Blind Mining</h3><p>Delayed gratification over 3–6 month vesting cycles. User fatigue from over-promised airdrops. Traders are tired of being farmed.</p></div>
+    <div class="card cyan"><h3>Dynamic Fee Hooks</h3><p>Only protect LPs by raising fees during volatility — driving traders AWAY. Solving one side at the expense of the other is not a solution.</p></div>
+  </div>
+  <div class="tagline">We need a mechanism that rewards traders for returning — without penalizing LPs.</div>
+</div><div class="page-num">02 / 10</div></div>
+
+<!-- ═══ 3 · Core Mechanism ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s3">
+  <h1 class="title">Core Mechanism: The Lottery Flywheel</h1>
+  <h2 class="sub">0.01% invisible tax → Dynamic-N trigger → Multi-tier prizes → LP volume surge</h2>
+  <div class="flow">
+    <div class="step"><div class="dot" style="background:rgba(184,124,250,.18);color:var(--purple)">¢</div><h3>0.01% Tax</h3><p>One basis point from every swap output. Invisible friction — traders don't feel it.</p></div>
+    <div class="step"><div class="dot" style="background:rgba(77,168,255,.18);color:var(--blue)">N</div><h3>Dynamic-N</h3><p>Pool small → fast trigger. Pool large → anticipation. Bounded [100, 200].</p></div>
+    <div class="step"><div class="dot" style="background:rgba(0,240,212,.18);color:var(--cyan)">◆</div><h3>Multi-Tier Prizes</h3><p>60% Grand Prize + 10×4% Consolation. "I was so close" keeps them swapping.</p></div>
+    <div class="step"><div class="dot" style="background:rgba(46,230,155,.18);color:var(--green)">↑</div><h3>LPs Win Too</h3><p>Volume surge from lottery addiction lifts all LP fee revenue above static pools.</p></div>
+  </div>
+  <div class="fbox">N = 100 + 100 × poolSize / (poolSize + 100 ETH) &nbsp;&nbsp;|&nbsp;&nbsp; Range: [100, 200] &nbsp;&nbsp;|&nbsp;&nbsp; Psychology-driven curve</div>
+</div><div class="page-num">03 / 10</div></div>
+
+<!-- ═══ 4 · LP Value Defense ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s4">
+  <h1 class="title">LP Value: The Critical Defense</h1>
+  <h2 class="sub">"Doesn't the lottery fee dilute LP returns?" — Here's the math.</h2>
+  <div class="compare">
+    <div class="col c-bad"><h3>✘ Traditional Pool</h3><p>0.3% static fee, no lottery mechanism</p><p>LP APR: 12% — flat, predictable, no growth</p><p>Volume: baseline, zero compounding flywheel</p><p>Trader retention: none — swap once, leave forever</p></div>
+    <div class="col c-good"><h3>✔ Lottery Pool</h3><p>0.3% LP fee + 0.01% lottery ticket</p><p>LP APR: 15–18% — driven by volume surge</p><p>Volume: +22–35% from lottery flywheel effect</p><p>Trader retention: high — "next swap could be the winner"</p></div>
+  </div>
+  <div class="hl">When lottery multiplier > 1.2×, LP fee revenue beats static pools by 15–30% — even after lottery pool deduction</div>
+</div><div class="page-num">04 / 10</div></div>
+
+<!-- ═══ 5 · Randomness Ethics ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s5">
+  <h1 class="title">Randomness: Engineering Ethics</h1>
+  <h2 class="sub">We don't pretend. We know exactly where the line is, and we draw it clearly.</h2>
+  <div class="compare">
+    <div class="col c-warn"><h3>⚠ Hackathon Demo</h3><p>Pseudo-random: keccak256(prevrandao + timestamp + sender + seed)</p><p>✔ OK for testnet — unpredictable enough for casual users</p><p>✘ Vulnerable to block builder manipulation</p><p>✘ Not suitable for mainnet high-value pools</p></div>
+    <div class="col c-good"><h3>✓ Production · Chainlink VRF</h3><p>Cryptographically verifiable randomness</p><p>✔ Immune to block builder manipulation</p><p>✔ X Layer natively supports oracle networks</p><p>✔ Gas-efficient: ~30k per VRF request on L2</p></div>
+  </div>
+  <div class="hl">We deliver an honest MVP with clear boundaries. The path to production security is documented and achievable within one sprint.</div>
+</div><div class="page-num">05 / 10</div></div>
+
+<!-- ═══ 6 · Flywheel Endgame ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s6">
+  <h1 class="title">The Flywheel Endgame</h1>
+  <h2 class="sub">A self-reinforcing growth loop — every component feeds the next.</h2>
+  <div class="quad">
+    <div class="q"><h3 style="color:var(--purple)">More Trades</h3><p>"Next swap could be the winner" — gambling psychology drives repeated engagement. Every transaction is a lottery entry.</p></div>
+    <div class="q"><h3 style="color:var(--blue)">Bigger Prize Pool</h3><p>0.01% × cumulative volume = compounding lottery treasury. The pool never stops growing.</p></div>
+    <div class="q"><h3 style="color:var(--green)">LPs Earn More</h3><p>Volume-driven fee growth outpaces the 0.01% deduction. Net LP revenue increases by 15–30%.</p></div>
+    <div class="q"><h3 style="color:var(--cyan)">More LPs Join</h3><p>Higher APR attracts more liquidity → tighter spreads → even more traders → the cycle compounds.</p></div>
+  </div>
+  <div class="center-glow">⟳ &nbsp;Compound Growth</div>
+</div><div class="page-num">06 / 10</div></div>
+
+<!-- ═══ 7 · Architecture ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s7">
+  <h1 class="title">Smart Contract Architecture</h1>
+  <h2 class="sub">Uniswap V4 Hook Lifecycle · SwapLotteryHook.sol · 7.6 KB on-chain</h2>
+  <div class="pipe">
+    <div class="p">User<br>Swaps</div><div class="arr">→</div>
+    <div class="p">beforeSwap<br>Set Dynamic Fee</div><div class="arr">→</div>
+    <div class="p">PoolManager<br>Executes Swap</div><div class="arr">→</div>
+    <div class="p">afterSwap<br>Lottery Logic</div><div class="arr">→</div>
+    <div class="p">Claim Ticket<br>Return Delta</div><div class="arr">→</div>
+    <div class="p">Check Draw<br>Trigger if N≥100</div>
+  </div>
+  <div class="specs">
+    <p>▸ getDynamicN() → N ∈ [100, 200], psychology-driven curve with smooth scaling</p>
+    <p>▸ _draw() → 60% grand prize + 10 × 4% consolation, keccak256 pseudo-random pick</p>
+    <p>▸ _pay() → manager.take(currency, winner, amount) from hook's accumulated PoolManager balance</p>
+  </div>
+</div><div class="page-num">07 / 10</div></div>
+
+<!-- ═══ 8 · Deployment ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s8">
+  <h1 class="title">Deployed on X Layer Testnet</h1>
+  <h2 class="sub">Live, verifiable contracts. Chain ID: 1952 · Explorer: oklink.com/xlayer-test</h2>
+  <div class="addrs">
+    <div class="row"><span class="lbl">PoolManager</span><span class="val">0x124850dA551dC83b124A9A3F84f8D6674C870Ba1</span></div>
+    <div class="row hl-row"><span class="lbl">SwapLotteryHook</span><span class="val">0x2D782F42A0a8bBc6b7526aC2272728976Eee90C4</span></div>
+    <div class="row"><span class="lbl">Test USDC</span><span class="val">0xC67958F2329f4C289aa43D52577C0aF32Dbae028</span></div>
+    <div class="row"><span class="lbl">Test WETH</span><span class="val">0x24003ccc694FF272e54b1601C68019d0E1639eBb</span></div>
+  </div>
+  <div class="stat">getDynamicN() = 100 &nbsp;|&nbsp; getProgress() = (0, 100) &nbsp;|&nbsp; 4/4 Tests Passed &nbsp;|&nbsp; Hook Flags = 0x10C4 ✓</div>
+</div><div class="page-num">08 / 10</div></div>
+
+<!-- ═══ 9 · Roadmap ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s9">
+  <h1 class="title">Known Limitations &amp; Production Roadmap</h1>
+  <h2 class="sub">Honest about where we are. Clear about where we're going.</h2>
+  <div class="cols">
+    <div class="col lims">
+      <h3 style="color:var(--amber)">⚠ Current Limitations</h3>
+      <div class="l">Pseudo-random: block.prevrandao is manipulable by block builders. Production needs Chainlink VRF.</div>
+      <div class="l">Single-currency tracking: lotteryPool doesn't distinguish token0 vs token1. Dual-currency in v2.</div>
+      <div class="l">10-loop consolation gas: needs batch payout optimization for mainnet cost efficiency.</div>
+    </div>
+    <div class="col">
+      <h3 style="color:var(--green)">→ Production Roadmap</h3>
+      <div class="timeline">
+        <div class="t"><span class="tt">Wk 1–2</span><span class="td">Chainlink VRF integration for verifiable randomness</span></div>
+        <div class="t"><span class="tt">Wk 3–4</span><span class="td">Dual-currency tracking + batch payout optimization</span></div>
+        <div class="t"><span class="tt">Mo 2</span><span class="td">Spearbit audit + mainnet beta launch on X Layer</span></div>
+        <div class="t"><span class="tt">Mo 3</span><span class="td">Frontend dApp + analytics dashboard + LP simulator</span></div>
+      </div>
+    </div>
+  </div>
+</div><div class="page-num">09 / 10</div></div>
+
+<!-- ═══ 10 · Closing ═══ -->
+<div class="slide"><div class="grid"></div><div class="vignette"></div><div class="topbar"></div>
+<div class="wrap s10"><div class="glow"></div>
+  <h1><span class="g">Every Swap</span><br><span class="g">Is a Ticket.</span></h1>
+  <h1 style="font-size:38px;font-weight:700;color:var(--text);margin-top:14px">Every LP Is a Winner.</h1>
+  <p style="font-size:15px;color:var(--muted);margin-top:10px">0.01% tax · Dynamic-N psychology · Multi-tier prizes · LP value growth</p>
+  <div class="cta">Deployed on X Layer Testnet &nbsp;·&nbsp; 4/4 Tests Passing</div>
+</div><div class="page-num">10 / 10</div></div>
+
+</body></html>

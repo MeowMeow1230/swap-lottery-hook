@@ -1,0 +1,12 @@
+.env
+.env.example
+node_modules/
+cache/
+out/
+broadcast/
+video_output/audio/
+video_output/segments/
+video_output/list.txt
+*.mp4
+*.pptx
+.DS_Store

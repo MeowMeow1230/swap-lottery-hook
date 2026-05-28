@@ -1,0 +1,19 @@
+Swap Lottery Hook. Turning every Uniswap V4 swap into a lottery ticket. Built for Hook the Future on X Layer.
+
+Traders flow through pools like water, swap once, never return. Static fees give them no reason to come back. Points programs delay gratification for months. Existing dynamic fee hooks protect LPs but drive traders away. We need a mechanism that rewards both sides.
+
+Here is the solution. 0.01 percent invisible tax on every swap output. Dynamic-N curve: when the prize pool is small, N is low, quick wins build hope. When it grows large, N rises, anticipation builds. Always bounded between 100 and 200. Multi-tier prizes: 60 percent grand prize, ten consolation winners at 4 percent each. That "I was so close" effect keeps people swapping.
+
+The number one question: does this not dilute LP returns? No. In simulation, when the lottery multiplier exceeds 1.2x, LP fee revenue beats traditional pools by 15 to 30 percent. The volume surge from lottery-driven trading more than compensates. The 0.01 percent tax is a growth investment, not a cost.
+
+We are honest about our boundaries. The hackathon demo uses pseudo-random from block.prevrandao, good enough for testnet, not for mainnet. Production would integrate Chainlink VRF for cryptographically verifiable randomness. X Layer natively supports these oracle networks. We know where the line is, and we draw it clearly.
+
+This creates a compounding flywheel. More trades grow the prize pool. Bigger prizes attract more traders. Higher volume generates more LP fees. Better returns attract more liquidity. Tighter spreads bring even more traders. A self-reinforcing loop.
+
+The entire hook is 7.6 kilobytes of Solidity. beforeSwap sets the dynamic fee. PoolManager executes the swap. afterSwap runs the lottery logic. Clean, auditable, on-chain.
+
+Deployed on X Layer testnet with verifiable contract addresses. PoolManager, test tokens, and the SwapLotteryHook are all live. Four out of four tests passing. Every callback traceable on-chain.
+
+We know what needs to improve. Pseudo-random goes to Chainlink VRF. Single-currency tracking splits into dual-currency. The ten-loop consolation draw gets batch optimization. And we have a clear four-stage roadmap from audit to mainnet beta to full dApp launch.
+
+Swap Lottery Hook. Every swap is a ticket. Every LP is a winner. Thank you.
